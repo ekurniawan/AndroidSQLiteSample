@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.actualsolusi.samplejson.MainActivity">
+    <item
+        android:id="@+id/action_tambahKategori"
+        android:orderInCategory="100"
+        android:title="Tambah Kategori"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_tambahBarang"
+        android:orderInCategory="100"
+        android:title="Tambah Barang"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_listBarang"
+        android:orderInCategory="100"
+        android:title="List Barang"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_upload"
+        android:orderInCategory="100"
+        android:title="Upload Image"
+        app:showAsAction="never" />
+</menu>
