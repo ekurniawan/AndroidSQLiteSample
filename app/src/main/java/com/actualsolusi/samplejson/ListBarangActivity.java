@@ -32,7 +32,9 @@ public class ListBarangActivity extends AppCompatActivity {
         listViewBarang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent();
+                Intent i = new Intent(ListBarangActivity.this,DetailBarangActivity.class);
+                i.putExtra("BarangID",listBarang.get(position).getBarangID());
+                startActivity(i);
             }
         });
     }

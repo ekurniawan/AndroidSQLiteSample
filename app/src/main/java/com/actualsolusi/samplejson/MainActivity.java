@@ -10,13 +10,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,14 +22,14 @@ import java.io.IOException;
 import java.util.List;
 
 import models.Kategori;
+import models.TokenOutput;
 import services.KategoriServices;
-
-import static android.R.id.text1;
 
 public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
     private ListView lvKategori;
     private List<Kategori> listKategori;
     private Button btnCheck;
+    private TokenOutput myToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,18 +119,20 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         new AsyncTask<Void,Void,Void>(){
             ProgressDialog progress;
 
-            @Override
+            /*@Override
             protected void onPreExecute() {
                 super.onPreExecute();
                 progress = new ProgressDialog(MainActivity.this);
                 progress.setMessage("loading...");
                 progress.show();
-            }
+            }*/
 
             @Override
             protected Void doInBackground(Void... params) {
                 try{
-                    listKategori = KategoriServices.GetAllKategori();
+                    //listKategori = KategoriServices.GetAllKategori();
+                    myToken = KategoriServices.postToken();
+                    Log.v("MyServices",myToken.getAccessToken());
                     //Log.v("MyServices",listKategori.get(0).getNamaKategori());
                 } catch (IOException e) {
                     Log.d("MyServices",e.getLocalizedMessage());
@@ -141,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 return null;
             }
 
-            @Override
+            /*@Override
             protected void onPostExecute(Void aVoid) {
                 ArrayAdapter<Kategori> adapterKategori = new ArrayAdapter<Kategori>(getApplicationContext(),
                         android.R.layout.simple_list_item_2, text1,listKategori){
@@ -164,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 if(progress!=null){
                     progress.dismiss();
                 }
-            }
+            }*/
         }.execute();
     }
 

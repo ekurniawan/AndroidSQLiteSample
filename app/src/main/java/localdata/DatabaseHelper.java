@@ -163,7 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Barang GetBarangById(String barangID){
         SQLiteDatabase db = this.getReadableDatabase();
-        String strSql = "select * from "+Table_Barang+" where "+BarangID+" = ?";
+        String strSql = "select * from "+Table_Barang+" where "+BarangID+"=?";
         Log.e(LOG,strSql);
 
         Cursor c = db.rawQuery(strSql,new String[]{barangID});
@@ -211,6 +211,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return listKategori;
     }
 
+    /*public int GetKategoriByIdPos(int kategoriID){
+        String strSql = "select * from "+Table_Kategori+" where KategoriID=? order by "+NamaKategori+" asc";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(strSql,new String[]{String.valueOf(kategoriID)});
+        if(c!=null)
+            c.moveToFirst();
+    }*/
+
     public long InsertKategori(Kategori kategori){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -225,6 +233,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void DeleteAllKategori(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from "+Table_Kategori);
+
     }
 
     public void SeedingKategori(){

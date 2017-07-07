@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import models.Kategori;
+import models.TokenOutput;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -24,8 +25,9 @@ import okhttp3.Response;
  */
 
 public final class KategoriServices {
-    private static final String SERVICES_URL = "http://actservices.azurewebsites.net/";
+    //private static final String SERVICES_URL = "http://actservices.azurewebsites.net/";
     //private static final String SERVICES_URL = "http://10.0.2.2:8088/";
+    private static final String SERVICES_URL = "http://localhost:49985/";
     private static final OkHttpClient client;
 
     static {
@@ -98,6 +100,37 @@ public final class KategoriServices {
 
         return response.code();
         //Log.d("PostKategori",String.valueOf(response.code()));
+    }
+
+    public static TokenOutput postToken() throws IOException {
+        TokenOutput myToken = new TokenOutput();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://10.0.2.2:8081/Token").newBuilder();
+        String url = urlBuilder.build().toString();
+
+        String strContent = "grant_type=password&username=erick@actual-training.com&password=Erick@123";
+        RequestBody body = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8;"),
+                strContent);
+
+        Request request = new Request.Builder()
+                .url(url).post(body).build();
+
+        Response response = client.newCall(request).execute();
+        String result = response.body().string();
+
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if(!jsonObject.isNull("access_token")){
+                myToken.setAccessToken(jsonObject.getString("access_token"));
+                myToken.setUsername(jsonObject.getString("userName"));
+                myToken.setExpires(jsonObject.getInt("expires_in"));
+                myToken.setTokenType(jsonObject.getString("token_type"));
+            }
+
+        } catch (JSONException e) {
+            Log.d("MyServices",e.getLocalizedMessage());
+        }
+        return myToken;
+
     }
 
     public static int updateKategori(Kategori kategori) throws JSONException, IOException {

@@ -26,6 +26,7 @@ public class SpinnerKategoriAdapter extends ArrayAdapter<Kategori> {
         this.listKategori = listKategori;
     }
 
+
     @Override
     public int getCount() {
         return listKategori.size();
